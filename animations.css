@@ -1,0 +1,61 @@
+/* ===== Animations ===== */
+.animate-fade-in {
+    opacity: 0;
+    animation: fadeIn 0.6s ease forwards
+}
+
+.animate-fade-in-up {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.6s ease forwards
+}
+
+.animate-fade-in-right {
+    opacity: 0;
+    transform: translateX(40px);
+    animation: fadeInRight 0.8s ease forwards
+}
+
+.delay-1 {
+    animation-delay: 0.2s
+}
+
+.delay-2 {
+    animation-delay: 0.4s
+}
+
+.delay-3 {
+    animation-delay: 0.6s
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1
+    }
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0)
+    }
+}
+
+@keyframes fadeInRight {
+    to {
+        opacity: 1;
+        transform: translateX(0)
+    }
+}
+
+/* Intersection Observer animations */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0)
+}

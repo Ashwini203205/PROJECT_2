@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Checkout - Review your order and proceed to payment">
+    <title>Checkout | NovaPay</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/checkout.css">
+</head>
+
+<body>
+    <canvas id="particle-canvas"></canvas>
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <div class="logo-icon"><svg viewBox="0 0 40 40" fill="none">
+                        <path d="M20 2L35 10V30L20 38L5 30V10L20 2Z" stroke="url(#lg1)" stroke-width="2" fill="none" />
+                        <path d="M20 14L25 17V23L20 26L15 23V17L20 14Z" fill="url(#lg1)" />
+                        <defs>
+                            <linearGradient id="lg1" x1="0" y1="0" x2="40" y2="40">
+                                <stop offset="0%" stop-color="#6366f1" />
+                                <stop offset="100%" stop-color="#06b6d4" />
+                            </linearGradient>
+                        </defs>
+                    </svg></div><span class="logo-text">Nova<span class="logo-accent">Pay</span></span>
+            </a>
+            <div class="nav-links" id="nav-links">
+                <a href="index.html" class="nav-link">Home</a><a href="products.html" class="nav-link">Products</a>
+                <a href="checkout.html" class="nav-link active">Checkout</a><a href="gateway.html"
+                    class="nav-link">Payment Gateway</a>
+                <a href="orders.html" class="nav-link">Orders</a>
+            </div>
+            <div class="nav-actions">
+                <button class="nav-cart-btn" onclick="toggleCart()"><svg viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+                        <line x1="3" y1="6" x2="21" y2="6" />
+                        <path d="M16 10a4 4 0 01-8 0" />
+                    </svg><span class="cart-badge" id="cart-badge">0</span></button>
+                <button class="hamburger" onclick="toggleMobileMenu()"><span></span><span></span><span></span></button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header" style="padding:120px 0 2rem;text-align:center;position:relative;z-index:1">
+            <span class="section-tag">Secure Checkout</span>
+            <h1 class="section-title">Complete Your <span class="gradient-text">Order</span></h1>
+        </div>
+
+        <div class="checkout-layout" id="checkout-layout">
+            <!-- Left: Shipping Form -->
+            <div class="checkout-form-section">
+                <div class="checkout-card">
+                    <h3 class="checkout-card-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20"
+                            height="20">
+                            <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+                            <circle cx="8.5" cy="7" r="4" />
+                        </svg>
+                        Shipping Information
+                    </h3>
+                    <form id="shipping-form">
+                        <div class="form-row">
+                            <div class="form-group"><label for="firstName">First Name</label><input type="text"
+                                    id="firstName" placeholder="Sarthak" required></div>
+                            <div class="form-group"><label for="lastName">Last Name</label><input type="text"
+                                    id="lastName" placeholder="Kumar" required></div>
+                        </div>
+                        <div class="form-group"><label for="email">Email Address</label><input type="email" id="email"
+                                placeholder="sarthak@example.com" required></div>
+                        <div class="form-group"><label for="phone">Phone Number</label><input type="tel" id="phone"
+                                placeholder="+91 98765 43210" required></div>
+                        <div class="form-group"><label for="address">Street Address</label><input type="text"
+                                id="address" placeholder="123 Main Street, Sector 15" required></div>
+                        <div class="form-row">
+                            <div class="form-group"><label for="city">City</label><input type="text" id="city"
+                                    placeholder="Mumbai" required></div>
+                            <div class="form-group"><label for="state">State</label>
+                                <select id="state" required>
+                                    <option value="">Select State</option>
+                                    <option>Maharashtra</option>
+                                    <option>Delhi</option>
+                                    <option>Karnataka</option>
+                                    <option>Tamil Nadu</option>
+                                    <option>Gujarat</option>
+                                    <option>Rajasthan</option>
+                                    <option>Uttar Pradesh</option>
+                                    <option>West Bengal</option>
+                                    <option>Telangana</option>
+                                    <option>Madhya Pradesh</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group"><label for="pincode">PIN Code</label><input type="text" id="pincode"
+                                    placeholder="400001" required maxlength="6"></div>
+                            <div class="form-group"><label for="country">Country</label><input type="text" id="country"
+                                    value="India" readonly></div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="checkout-card">
+                    <h3 class="checkout-card-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20"
+                            height="20">
+                            <path d="M21 10H3M21 6H3M21 14H3M21 18H3" />
+                        </svg>
+                        Shipping Method
+                    </h3>
+                    <div class="shipping-options">
+                        <label class="shipping-option active"><input type="radio" name="shipping" value="standard"
+                                checked>
+                            <div class="shipping-option-info"><span class="shipping-option-name">Standard
+                                    Delivery</span><span class="shipping-option-desc">5-7 business days</span></div>
+                            <span class="shipping-option-price">FREE</span>
+                        </label>
+                        <label class="shipping-option"><input type="radio" name="shipping" value="express">
+                            <div class="shipping-option-info"><span class="shipping-option-name">Express
+                                    Delivery</span><span class="shipping-option-desc">2-3 business days</span></div>
+                            <span class="shipping-option-price">₹199</span>
+                        </label>
+                        <label class="shipping-option"><input type="radio" name="shipping" value="overnight">
+                            <div class="shipping-option-info"><span class="shipping-option-name">Overnight
+                                    Delivery</span><span class="shipping-option-desc">Next business day</span></div>
+                            <span class="shipping-option-price">₹499</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Order Summary -->
+            <div class="checkout-summary-section">
+                <div class="checkout-card sticky-card">
+                    <h3 class="checkout-card-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20"
+                            height="20">
+                            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+                            <line x1="3" y1="6" x2="21" y2="6" />
+                        </svg>
+                        Order Summary
+                    </h3>
+                    <div id="checkout-items"></div>
+                    <div class="summary-divider"></div>
+                    <div class="summary-row"><span>Subtotal</span><span id="summary-subtotal">₹0</span></div>
+                    <div class="summary-row"><span>Shipping</span><span id="summary-shipping">FREE</span></div>
+                    <div class="summary-row"><span>Tax (GST 18%)</span><span id="summary-tax">₹0</span></div>
+                    <div class="summary-row discount-row" id="discount-row" style="display:none">
+                        <span>Discount</span><span id="summary-discount" class="discount-value">-₹0</span></div>
+                    <div class="summary-divider"></div>
+                    <div class="summary-row summary-total"><span>Total</span><span id="summary-total">₹0</span></div>
+
+                    <div class="coupon-section">
+                        <div class="coupon-input-group">
+                            <input type="text" id="coupon-input" placeholder="Enter coupon code">
+                            <button class="btn btn-sm btn-outline" onclick="applyCoupon()">Apply</button>
+                        </div>
+                        <p class="coupon-hint">Try: NOVA10, FIRST20, SAVE500</p>
+                    </div>
+
+                    <button class="btn btn-primary btn-block btn-lg" id="proceed-payment-btn"
+                        onclick="proceedToPayment()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20"
+                            height="20">
+                            <rect x="1" y="4" width="22" height="16" rx="2" />
+                            <line x1="1" y1="10" x2="23" y2="10" />
+                        </svg>
+                        Proceed to Payment
+                    </button>
+
+                    <div class="security-badges">
+                        <span>🔒 SSL Encrypted</span>
+                        <span>🛡️ Buyer Protection</span>
+                        <span>🧪 Sandbox Mode</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Empty Cart State -->
+        <div class="checkout-empty" id="checkout-empty" style="display:none">
+            <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1" opacity="0.2" width="120"
+                height="120">
+                <path
+                    d="M25 25L20 10H5M25 25H85L75 65H30L25 25ZM55 85C55 88.3 52.3 91 49 91C45.7 91 43 88.3 43 85M75 85C75 88.3 72.3 91 69 91C65.7 91 63 88.3 63 85" />
+            </svg>
+            <h2>Your cart is empty</h2>
+            <p>Add some products to your cart before checking out</p>
+            <a href="products.html" class="btn btn-primary btn-lg">Browse Products</a>
+        </div>
+    </div>
+
+    <!-- Cart Sidebar (hidden on checkout) -->
+    <div class="cart-overlay" id="cart-overlay" onclick="toggleCart()"></div>
+    <aside class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3>Shopping Cart</h3><button class="cart-close" onclick="toggleCart()"><svg viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                </svg></button>
+        </div>
+        <div class="cart-items" id="cart-items">
+            <div class="cart-empty" id="cart-empty">
+                <p>Your cart is empty</p>
+            </div>
+        </div>
+        <div class="cart-footer" id="cart-footer" style="display:none">
+            <div class="cart-total"><span>Total</span><span class="cart-total-value" id="cart-total-value">₹0</span>
+            </div>
+        </div>
+    </aside>
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="js/data.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/particles.js"></script>
+    <script src="js/checkout.js"></script>
+</body>
+
+</html>

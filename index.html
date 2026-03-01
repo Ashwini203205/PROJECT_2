@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="NovaPay - Premium E-Commerce Store with Secure Payment Gateway. Shop the latest tech products with PayPal and Stripe integration.">
+    <title>NovaPay | Premium E-Commerce Store</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+    <!-- Particle Background -->
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo" id="nav-logo">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 40 40" fill="none">
+                        <path d="M20 2L35 10V30L20 38L5 30V10L20 2Z" stroke="url(#logoGrad)" stroke-width="2" fill="none"/>
+                        <path d="M20 8L30 14V26L20 32L10 26V14L20 8Z" fill="url(#logoGrad)" opacity="0.3"/>
+                        <path d="M20 14L25 17V23L20 26L15 23V17L20 14Z" fill="url(#logoGrad)"/>
+                        <defs>
+                            <linearGradient id="logoGrad" x1="0" y1="0" x2="40" y2="40">
+                                <stop offset="0%" stop-color="#6366f1"/>
+                                <stop offset="100%" stop-color="#06b6d4"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <span class="logo-text">Nova<span class="logo-accent">Pay</span></span>
+            </a>
+            <div class="nav-links" id="nav-links">
+                <a href="index.html" class="nav-link active" id="nav-home">Home</a>
+                <a href="products.html" class="nav-link" id="nav-products">Products</a>
+                <a href="checkout.html" class="nav-link" id="nav-checkout">Checkout</a>
+                <a href="gateway.html" class="nav-link" id="nav-gateway">Payment Gateway</a>
+                <a href="orders.html" class="nav-link" id="nav-orders">Orders</a>
+            </div>
+            <div class="nav-actions">
+                <button class="nav-cart-btn" id="nav-cart-btn" onclick="toggleCart()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+                        <line x1="3" y1="6" x2="21" y2="6"/>
+                        <path d="M16 10a4 4 0 01-8 0"/>
+                    </svg>
+                    <span class="cart-badge" id="cart-badge">0</span>
+                </button>
+                <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero-section">
+        <div class="hero-bg-effects">
+            <div class="hero-orb hero-orb-1"></div>
+            <div class="hero-orb hero-orb-2"></div>
+            <div class="hero-orb hero-orb-3"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-badge animate-fade-in">
+                <span class="badge-dot"></span>
+                Sandbox Payment Gateway Active
+            </div>
+            <h1 class="hero-title animate-fade-in-up">
+                Experience <span class="gradient-text">Seamless</span> Payment Processing
+            </h1>
+            <p class="hero-subtitle animate-fade-in-up delay-1">
+                Simulated PayPal & Stripe Sandbox APIs with real-time transaction processing. 
+                Built with Java backend engine and C++ payment processor.
+            </p>
+            <div class="hero-actions animate-fade-in-up delay-2">
+                <a href="products.html" class="btn btn-primary btn-lg" id="shop-now-btn">
+                    <span>Shop Now</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="5" y1="12" x2="19" y2="12"/>
+                        <polyline points="12 5 19 12 12 19"/>
+                    </svg>
+                </a>
+                <a href="gateway.html" class="btn btn-outline btn-lg" id="explore-gateway-btn">
+                    <span>Explore Gateway</span>
+                </a>
+            </div>
+            <div class="hero-stats animate-fade-in-up delay-3">
+                <div class="stat-item">
+                    <span class="stat-value" data-count="10000">0</span>
+                    <span class="stat-label">Transactions</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-value">99.9%</span>
+                    <span class="stat-label">Uptime</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-value">&lt;200ms</span>
+                    <span class="stat-label">Response</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-visual animate-fade-in-right">
+            <div class="gateway-card-preview">
+                <div class="preview-header">
+                    <div class="preview-dots">
+                        <span></span><span></span><span></span>
+                    </div>
+                    <span class="preview-title">Payment Gateway</span>
+                </div>
+                <div class="preview-body">
+                    <div class="preview-amount">₹49,999.00</div>
+                    <div class="preview-methods">
+                        <div class="preview-method active">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <rect x="2" y="4" width="20" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                                <line x1="2" y1="10" x2="22" y2="10" stroke="currentColor" stroke-width="1.5"/>
+                            </svg>
+                            Card
+                        </div>
+                        <div class="preview-method">
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="16">
+                                <path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944 2.61A.859.859 0 0 1 5.793 2h6.21c2.058 0 3.578.53 4.527 1.576.897.992 1.192 2.387.876 4.142l-.015.088v.06l.084.048c.615.334 1.098.776 1.441 1.327.36.578.578 1.27.648 2.06.073.814-.013 1.763-.256 2.819l-.009.038c-.213.96-.55 1.796-1.005 2.487-.42.635-.944 1.166-1.562 1.576-.591.394-1.274.682-2.031.855-.735.17-1.553.255-2.435.255H12.09a1.073 1.073 0 0 0-1.06.909l-.045.27-.758 4.806-.034.196a1.073 1.073 0 0 1-1.06.909l-2.057-.001Z" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                            </svg>
+                            PayPal
+                        </div>
+                    </div>
+                    <div class="preview-input-group">
+                        <div class="preview-input">
+                            <span class="preview-input-label">Card Number</span>
+                            <span class="preview-input-value">4242 •••• •••• 4242</span>
+                        </div>
+                        <div class="preview-input-row">
+                            <div class="preview-input">
+                                <span class="preview-input-label">Expiry</span>
+                                <span class="preview-input-value">12/28</span>
+                            </div>
+                            <div class="preview-input">
+                                <span class="preview-input-label">CVC</span>
+                                <span class="preview-input-value">•••</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="preview-btn-animated">
+                        <div class="btn-shimmer"></div>
+                        Pay ₹49,999.00
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="section" id="featured-products">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Featured Collection</span>
+                <h2 class="section-title">Trending <span class="gradient-text">Products</span></h2>
+                <p class="section-subtitle">Discover our top picks powered by secure payment processing</p>
+            </div>
+            <div class="products-grid" id="products-grid">
+                <!-- Products loaded by JS -->
+            </div>
+            <div class="section-cta">
+                <a href="products.html" class="btn btn-outline" id="view-all-btn">
+                    View All Products
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18">
+                        <line x1="5" y1="12" x2="19" y2="12"/>
+                        <polyline points="12 5 19 12 12 19"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Payment Methods Section -->
+    <section class="section section-dark" id="payment-methods-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Secure Payments</span>
+                <h2 class="section-title">Supported <span class="gradient-text">Payment Methods</span></h2>
+                <p class="section-subtitle">Multiple payment options with sandbox simulation</p>
+            </div>
+            <div class="payment-methods-grid">
+                <div class="payment-method-card" id="pm-stripe">
+                    <div class="pm-icon stripe-icon">
+                        <svg viewBox="0 0 120 50" fill="none">
+                            <rect x="5" y="5" width="110" height="40" rx="8" fill="#635BFF" opacity="0.15"/>
+                            <text x="60" y="32" text-anchor="middle" fill="#635BFF" font-size="18" font-weight="700" font-family="Inter">Stripe</text>
+                        </svg>
+                    </div>
+                    <h3>Stripe Test API</h3>
+                    <p>Credit/Debit card processing with test card numbers and sandbox environment</p>
+                    <div class="pm-features">
+                        <span class="pm-feature">✓ Test Cards</span>
+                        <span class="pm-feature">✓ 3D Secure</span>
+                        <span class="pm-feature">✓ Webhooks</span>
+                    </div>
+                </div>
+                <div class="payment-method-card" id="pm-paypal">
+                    <div class="pm-icon paypal-icon">
+                        <svg viewBox="0 0 120 50" fill="none">
+                            <rect x="5" y="5" width="110" height="40" rx="8" fill="#003087" opacity="0.15"/>
+                            <text x="60" y="32" text-anchor="middle" fill="#003087" font-size="18" font-weight="700" font-family="Inter">PayPal</text>
+                        </svg>
+                    </div>
+                    <h3>PayPal Sandbox</h3>
+                    <p>PayPal checkout simulation with sandbox buyer and seller accounts</p>
+                    <div class="pm-features">
+                        <span class="pm-feature">✓ Sandbox Accounts</span>
+                        <span class="pm-feature">✓ Express Checkout</span>
+                        <span class="pm-feature">✓ Refunds</span>
+                    </div>
+                </div>
+                <div class="payment-method-card" id="pm-upi">
+                    <div class="pm-icon upi-icon">
+                        <svg viewBox="0 0 120 50" fill="none">
+                            <rect x="5" y="5" width="110" height="40" rx="8" fill="#4CAF50" opacity="0.15"/>
+                            <text x="60" y="32" text-anchor="middle" fill="#4CAF50" font-size="18" font-weight="700" font-family="Inter">UPI</text>
+                        </svg>
+                    </div>
+                    <h3>UPI Payment</h3>
+                    <p>Simulated UPI payment flow with QR code generation and VPA verification</p>
+                    <div class="pm-features">
+                        <span class="pm-feature">✓ QR Code</span>
+                        <span class="pm-feature">✓ VPA Check</span>
+                        <span class="pm-feature">✓ Instant</span>
+                    </div>
+                </div>
+                <div class="payment-method-card" id="pm-netbanking">
+                    <div class="pm-icon nb-icon">
+                        <svg viewBox="0 0 120 50" fill="none">
+                            <rect x="5" y="5" width="110" height="40" rx="8" fill="#FF6B35" opacity="0.15"/>
+                            <text x="60" y="32" text-anchor="middle" fill="#FF6B35" font-size="18" font-weight="700" font-family="Inter">NetBank</text>
+                        </svg>
+                    </div>
+                    <h3>Net Banking</h3>
+                    <p>Bank transfer simulation with major Indian banks and real-time confirmation</p>
+                    <div class="pm-features">
+                        <span class="pm-feature">✓ All Banks</span>
+                        <span class="pm-feature">✓ Secure OTP</span>
+                        <span class="pm-feature">✓ Real-time</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Architecture Section -->
+    <section class="section" id="architecture-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Technical Architecture</span>
+                <h2 class="section-title">Built with <span class="gradient-text">Java & C++</span></h2>
+                <p class="section-subtitle">Enterprise-grade payment processing architecture</p>
+            </div>
+            <div class="arch-grid">
+                <div class="arch-card" id="arch-java">
+                    <div class="arch-icon">
+                        <svg viewBox="0 0 48 48" fill="none">
+                            <rect width="48" height="48" rx="12" fill="#ED8B00" opacity="0.15"/>
+                            <text x="24" y="30" text-anchor="middle" fill="#ED8B00" font-size="16" font-weight="700">J</text>
+                        </svg>
+                    </div>
+                    <h3>Java Backend</h3>
+                    <p>RESTful API server handling authentication, order management, and payment orchestration using Spring Boot patterns</p>
+                    <code class="arch-code">PaymentController.java</code>
+                </div>
+                <div class="arch-card" id="arch-cpp">
+                    <div class="arch-icon">
+                        <svg viewBox="0 0 48 48" fill="none">
+                            <rect width="48" height="48" rx="12" fill="#00599C" opacity="0.15"/>
+                            <text x="24" y="30" text-anchor="middle" fill="#00599C" font-size="14" font-weight="700">C++</text>
+                        </svg>
+                    </div>
+                    <h3>C++ Payment Engine</h3>
+                    <p>High-performance transaction processor with fraud detection, encryption, and payment validation algorithms</p>
+                    <code class="arch-code">PaymentEngine.cpp</code>
+                </div>
+                <div class="arch-card" id="arch-frontend">
+                    <div class="arch-icon">
+                        <svg viewBox="0 0 48 48" fill="none">
+                            <rect width="48" height="48" rx="12" fill="#6366f1" opacity="0.15"/>
+                            <text x="24" y="30" text-anchor="middle" fill="#6366f1" font-size="14" font-weight="700">JS</text>
+                        </svg>
+                    </div>
+                    <h3>Frontend Interface</h3>
+                    <p>Modern responsive UI with real-time payment status, cart management, and interactive checkout experience</p>
+                    <code class="arch-code">HTML + CSS + JS</code>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Transaction Log Preview Section -->
+    <section class="section section-dark" id="transaction-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Live Monitoring</span>
+                <h2 class="section-title">Transaction <span class="gradient-text">Dashboard</span></h2>
+                <p class="section-subtitle">Real-time payment status and transaction logging</p>
+            </div>
+            <div class="terminal-window" id="transaction-terminal">
+                <div class="terminal-header">
+                    <div class="terminal-dots">
+                        <span class="dot red"></span>
+                        <span class="dot yellow"></span>
+                        <span class="dot green"></span>
+                    </div>
+                    <span class="terminal-title">payment-engine — transaction_log</span>
+                </div>
+                <div class="terminal-body" id="terminal-output">
+                    <!-- Terminal output generated by JS -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="nav-logo">
+                        <div class="logo-icon">
+                            <svg viewBox="0 0 40 40" fill="none">
+                                <path d="M20 2L35 10V30L20 38L5 30V10L20 2Z" stroke="url(#logoGrad2)" stroke-width="2" fill="none"/>
+                                <path d="M20 14L25 17V23L20 26L15 23V17L20 14Z" fill="url(#logoGrad2)"/>
+                                <defs>
+                                    <linearGradient id="logoGrad2" x1="0" y1="0" x2="40" y2="40">
+                                        <stop offset="0%" stop-color="#6366f1"/>
+                                        <stop offset="100%" stop-color="#06b6d4"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                        </div>
+                        <span class="logo-text">Nova<span class="logo-accent">Pay</span></span>
+                    </a>
+                    <p class="footer-desc">Premium e-commerce platform with integrated sandbox payment gateway simulation.</p>
+                </div>
+                <div class="footer-links-group">
+                    <h4>Quick Links</h4>
+                    <a href="index.html">Home</a>
+                    <a href="products.html">Products</a>
+                    <a href="checkout.html">Checkout</a>
+                    <a href="orders.html">Order History</a>
+                </div>
+                <div class="footer-links-group">
+                    <h4>Payment</h4>
+                    <a href="gateway.html">Payment Gateway</a>
+                    <a href="gateway.html#stripe">Stripe Test API</a>
+                    <a href="gateway.html#paypal">PayPal Sandbox</a>
+                    <a href="gateway.html#upi">UPI Payments</a>
+                </div>
+                <div class="footer-links-group">
+                    <h4>Technology</h4>
+                    <a href="#arch-java">Java Backend</a>
+                    <a href="#arch-cpp">C++ Engine</a>
+                    <a href="java/PaymentController.java">View Java Code</a>
+                    <a href="cpp/PaymentEngine.cpp">View C++ Code</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 NovaPay. Sandbox Payment Gateway Simulation. Built with ❤️ using Java, C++ & JavaScript</p>
+                <div class="footer-badges">
+                    <span class="badge badge-secure">🔒 SSL Secured</span>
+                    <span class="badge badge-sandbox">🧪 Sandbox Mode</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-overlay" id="cart-overlay" onclick="toggleCart()"></div>
+    <aside class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3>Shopping Cart</h3>
+            <button class="cart-close" id="cart-close-btn" onclick="toggleCart()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+            </button>
+        </div>
+        <div class="cart-items" id="cart-items">
+            <div class="cart-empty" id="cart-empty">
+                <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.3">
+                    <path d="M16 16L10 6H4M16 16H56L50 42H20L16 16ZM36 54C36 56.2 34.2 58 32 58C29.8 58 28 56.2 28 54M50 54C50 56.2 48.2 58 46 58C43.8 58 42 56.2 42 54"/>
+                </svg>
+                <p>Your cart is empty</p>
+            </div>
+        </div>
+        <div class="cart-footer" id="cart-footer" style="display:none;">
+            <div class="cart-total">
+                <span>Total</span>
+                <span class="cart-total-value" id="cart-total-value">₹0</span>
+            </div>
+            <a href="checkout.html" class="btn btn-primary btn-block" id="proceed-checkout-btn">
+                Proceed to Checkout
+            </a>
+        </div>
+    </aside>
+
+    <!-- Toast Notification -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="js/data.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/particles.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/terminal.js"></script>
+</body>
+</html>

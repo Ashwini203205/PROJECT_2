@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Browse premium tech products at NovaPay. Headphones, laptops, smartwatches and more.">
+    <title>Products | NovaPay</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <style>
+        .page-header {
+            padding: 120px 0 3rem;
+            text-align: center;
+            position: relative;
+            z-index: 1
+        }
+
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+            position: relative;
+            z-index: 1
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1.25rem;
+            border-radius: var(--radius-full);
+            border: 1px solid var(--border-color);
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: rgba(99, 102, 241, 0.15);
+            border-color: var(--primary);
+            color: var(--primary-light)
+        }
+
+        .products-count {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1
+        }
+
+        .all-products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            position: relative;
+            z-index: 1
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="particle-canvas"></canvas>
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <div class="logo-icon"><svg viewBox="0 0 40 40" fill="none">
+                        <path d="M20 2L35 10V30L20 38L5 30V10L20 2Z" stroke="url(#lg1)" stroke-width="2" fill="none" />
+                        <path d="M20 14L25 17V23L20 26L15 23V17L20 14Z" fill="url(#lg1)" />
+                        <defs>
+                            <linearGradient id="lg1" x1="0" y1="0" x2="40" y2="40">
+                                <stop offset="0%" stop-color="#6366f1" />
+                                <stop offset="100%" stop-color="#06b6d4" />
+                            </linearGradient>
+                        </defs>
+                    </svg></div><span class="logo-text">Nova<span class="logo-accent">Pay</span></span>
+            </a>
+            <div class="nav-links" id="nav-links">
+                <a href="index.html" class="nav-link">Home</a><a href="products.html"
+                    class="nav-link active">Products</a>
+                <a href="checkout.html" class="nav-link">Checkout</a><a href="gateway.html" class="nav-link">Payment
+                    Gateway</a>
+                <a href="orders.html" class="nav-link">Orders</a>
+            </div>
+            <div class="nav-actions">
+                <button class="nav-cart-btn" onclick="toggleCart()"><svg viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+                        <line x1="3" y1="6" x2="21" y2="6" />
+                        <path d="M16 10a4 4 0 01-8 0" />
+                    </svg><span class="cart-badge" id="cart-badge">0</span></button>
+                <button class="hamburger" onclick="toggleMobileMenu()"><span></span><span></span><span></span></button>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="page-header">
+            <span class="section-tag">Our Collection</span>
+            <h1 class="section-title">All <span class="gradient-text">Products</span></h1>
+            <p class="section-subtitle">Premium tech products with secure payment processing</p>
+        </div>
+        <div class="filters" id="filters"></div>
+        <div class="products-count" id="products-count"></div>
+        <div class="all-products-grid" id="all-products-grid"></div>
+    </div>
+    <!-- Cart Sidebar -->
+    <div class="cart-overlay" id="cart-overlay" onclick="toggleCart()"></div>
+    <aside class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3>Shopping Cart</h3><button class="cart-close" onclick="toggleCart()"><svg viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                </svg></button>
+        </div>
+        <div class="cart-items" id="cart-items">
+            <div class="cart-empty" id="cart-empty"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor"
+                    stroke-width="1.5" opacity="0.3">
+                    <path
+                        d="M16 16L10 6H4M16 16H56L50 42H20L16 16ZM36 54C36 56.2 34.2 58 32 58C29.8 58 28 56.2 28 54M50 54C50 56.2 48.2 58 46 58C43.8 58 42 56.2 42 54" />
+                </svg>
+                <p>Your cart is empty</p>
+            </div>
+        </div>
+        <div class="cart-footer" id="cart-footer" style="display:none">
+            <div class="cart-total"><span>Total</span><span class="cart-total-value" id="cart-total-value">₹0</span>
+            </div><a href="checkout.html" class="btn btn-primary btn-block">Proceed to Checkout</a>
+        </div>
+    </aside>
+    <div class="toast-container" id="toast-container"></div>
+    <script src="js/data.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/particles.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            window.addEventListener('scroll', () => { document.getElementById('navbar')?.classList.toggle('scrolled', window.scrollY > 50); });
+            const categories = ['All', ...new Set(PRODUCTS.map(p => p.category))];
+            const filtersEl = document.getElementById('filters');
+            categories.forEach(c => {
+                const btn = document.createElement('button');
+                btn.className = 'filter-btn' + (c === 'All' ? ' active' : '');
+                btn.textContent = c;
+                btn.onclick = () => { document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); renderProducts(c); };
+                filtersEl.appendChild(btn);
+            });
+            function renderProducts(filter = 'All') {
+                const grid = document.getElementById('all-products-grid');
+                const filtered = filter === 'All' ? PRODUCTS : PRODUCTS.filter(p => p.category === filter);
+                document.getElementById('products-count').textContent = `Showing ${filtered.length} product${filtered.length !== 1 ? 's' : ''}`;
+                grid.innerHTML = '';
+                filtered.forEach(p => {
+                    const card = document.createElement('div');
+                    card.className = 'product-card reveal visible';
+                    card.innerHTML = `<div class="product-card-img"><img src="${p.image}" alt="${p.name}" loading="lazy">${p.badge ? `<span class="product-card-badge">${p.badge}</span>` : ''}<div class="product-card-actions"><button class="product-card-action-btn" onclick="cart.addItem(PRODUCTS.find(x=>x.id===${p.id}))" title="Add to Cart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></button></div></div><div class="product-card-body"><div class="product-card-category">${p.category}</div><div class="product-card-name">${p.name}</div><div class="product-card-desc">${p.description}</div><div class="product-card-footer"><span class="product-card-price">${formatCurrency(p.price)}${p.originalPrice ? `<span class="product-card-price-old">${formatCurrency(p.originalPrice)}</span>` : ''}</span><button class="btn btn-sm btn-primary" onclick="cart.addItem(PRODUCTS.find(x=>x.id===${p.id}))">Add</button></div></div>`;
+                    grid.appendChild(card);
+                });
+            }
+            renderProducts();
+            cart.renderCartSidebar();
+        });
+    </script>
+</body>
+
+</html>

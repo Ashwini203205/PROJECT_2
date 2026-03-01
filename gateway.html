@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="NovaPay Payment Gateway - Secure sandbox payment processing with Stripe and PayPal">
+    <title>Payment Gateway | NovaPay</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/gateway.css">
+</head>
+
+<body>
+    <canvas id="particle-canvas"></canvas>
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <div class="logo-icon"><svg viewBox="0 0 40 40" fill="none">
+                        <path d="M20 2L35 10V30L20 38L5 30V10L20 2Z" stroke="url(#lg1)" stroke-width="2" fill="none" />
+                        <path d="M20 14L25 17V23L20 26L15 23V17L20 14Z" fill="url(#lg1)" />
+                        <defs>
+                            <linearGradient id="lg1" x1="0" y1="0" x2="40" y2="40">
+                                <stop offset="0%" stop-color="#6366f1" />
+                                <stop offset="100%" stop-color="#06b6d4" />
+                            </linearGradient>
+                        </defs>
+                    </svg></div><span class="logo-text">Nova<span class="logo-accent">Pay</span></span>
+            </a>
+            <div class="nav-links" id="nav-links">
+                <a href="index.html" class="nav-link">Home</a><a href="products.html" class="nav-link">Products</a>
+                <a href="checkout.html" class="nav-link">Checkout</a><a href="gateway.html"
+                    class="nav-link active">Payment Gateway</a>
+                <a href="orders.html" class="nav-link">Orders</a>
+            </div>
+            <div class="nav-actions">
+                <button class="nav-cart-btn" onclick="toggleCart()"><svg viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+                        <line x1="3" y1="6" x2="21" y2="6" />
+                        <path d="M16 10a4 4 0 01-8 0" />
+                    </svg><span class="cart-badge" id="cart-badge">0</span></button>
+                <button class="hamburger" onclick="toggleMobileMenu()"><span></span><span></span><span></span></button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header" style="padding:120px 0 2rem;text-align:center;position:relative;z-index:1">
+            <span class="section-tag">🔒 Secure Payment</span>
+            <h1 class="section-title">Payment <span class="gradient-text">Gateway</span></h1>
+            <p class="section-subtitle">Sandbox mode — No real charges will be made</p>
+        </div>
+
+        <div class="gateway-layout" id="gateway-layout">
+            <!-- Left: Payment Methods -->
+            <div class="gateway-main">
+                <!-- Sandbox Banner -->
+                <div class="sandbox-banner">
+                    <div class="sandbox-icon">🧪</div>
+                    <div>
+                        <strong>Sandbox Mode Active</strong>
+                        <p>Use test card <code>4242 4242 4242 4242</code> for successful payment. All transactions are
+                            simulated.</p>
+                    </div>
+                </div>
+
+                <!-- Payment Method Tabs -->
+                <div class="gateway-card">
+                    <div class="method-tabs">
+                        <button class="method-tab active" data-method="card" onclick="switchMethod('card')">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"
+                                height="18">
+                                <rect x="1" y="4" width="22" height="16" rx="2" />
+                                <line x1="1" y1="10" x2="23" y2="10" />
+                            </svg>
+                            Credit/Debit Card
+                        </button>
+                        <button class="method-tab" data-method="paypal" onclick="switchMethod('paypal')">
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+                                <path
+                                    d="M7.076 21.337H2.47a.641.641 0 01-.633-.74L4.944 2.61A.859.859 0 015.793 2h6.21c2.058 0 3.578.53 4.527 1.576.897.992 1.192 2.387.876 4.142l-.015.088v.06l.084.048c.615.334 1.098.776 1.441 1.327.36.578.578 1.27.648 2.06.073.814-.013 1.763-.256 2.819l-.009.038c-.213.96-.55 1.796-1.005 2.487-.42.635-.944 1.166-1.562 1.576-.591.394-1.274.682-2.031.855-.735.17-1.553.255-2.435.255H12.09a1.073 1.073 0 00-1.06.909l-.045.27-.758 4.806-.034.196a1.073 1.073 0 01-1.06.909z"
+                                    fill="none" stroke="currentColor" stroke-width="1.5" />
+                            </svg>
+                            PayPal
+                        </button>
+                        <button class="method-tab" data-method="upi" onclick="switchMethod('upi')">
+                            <span style="font-size:16px">📱</span>
+                            UPI
+                        </button>
+                        <button class="method-tab" data-method="netbanking" onclick="switchMethod('netbanking')">
+                            <span style="font-size:16px">🏦</span>
+                            Net Banking
+                        </button>
+                    </div>
+
+                    <!-- Card Payment Form -->
+                    <div class="method-panel active" id="panel-card">
+                        <div class="card-preview" id="card-preview">
+                            <div class="card-preview-inner">
+                                <div class="card-chip"></div>
+                                <div class="card-brand" id="card-brand-display">VISA</div>
+                                <div class="card-number-display" id="card-number-display">•••• •••• •••• ••••</div>
+                                <div class="card-bottom">
+                                    <div>
+                                        <div class="card-label">CARD HOLDER</div>
+                                        <div class="card-holder-display" id="card-holder-display">YOUR NAME</div>
+                                    </div>
+                                    <div>
+                                        <div class="card-label">EXPIRES</div>
+                                        <div class="card-expiry-display" id="card-expiry-display">MM/YY</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <form id="card-form" onsubmit="return false">
+                            <div class="form-group">
+                                <label>Card Number</label>
+                                <div class="input-with-icon">
+                                    <input type="text" id="card-number" placeholder="4242 4242 4242 4242" maxlength="19"
+                                        autocomplete="off">
+                                    <span class="input-icon" id="card-brand-icon">💳</span>
+                                </div>
+                                <div class="test-cards-hint">
+                                    Test: <button type="button" class="test-card-btn"
+                                        onclick="fillTestCard('4242424242424242')">4242...4242 (Success)</button>
+                                    <button type="button" class="test-card-btn"
+                                        onclick="fillTestCard('4000000000000002')">4000...0002 (Decline)</button>
+                                </div>
+                            </div>
+                            <div class="form-group"><label>Cardholder Name</label><input type="text" id="card-name"
+                                    placeholder="SARTHAK KUMAR" autocomplete="off"></div>
+                            <div class="form-row">
+                                <div class="form-group"><label>Expiry Date</label><input type="text" id="card-expiry"
+                                        placeholder="12/28" maxlength="5" autocomplete="off"></div>
+                                <div class="form-group"><label>CVC / CVV</label><input type="text" id="card-cvc"
+                                        placeholder="123" maxlength="4" autocomplete="off"></div>
+                            </div>
+                            <div class="secure-3d-section" id="secure-3d" style="display:none">
+                                <div class="secure-3d-badge">🔐 3D Secure Authentication</div>
+                                <div class="form-group"><label>OTP (One-Time Password)</label><input type="text"
+                                        id="card-otp" placeholder="Enter 6-digit OTP" maxlength="6">
+                                    <p class="otp-hint">Demo OTP: <strong>123456</strong></p>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- PayPal Panel -->
+                    <div class="method-panel" id="panel-paypal">
+                        <div class="paypal-container">
+                            <div class="paypal-logo-large">
+                                <svg viewBox="0 0 200 60" fill="none" width="200">
+                                    <text x="100" y="40" text-anchor="middle" fill="#003087" font-size="30"
+                                        font-weight="800" font-family="Inter">Pay</text>
+                                    <text x="155" y="40" text-anchor="middle" fill="#009cde" font-size="30"
+                                        font-weight="800" font-family="Inter">Pal</text>
+                                </svg>
+                            </div>
+                            <div class="paypal-sandbox-info">
+                                <h4>PayPal Sandbox Credentials</h4>
+                                <div class="credential-row"><span>Buyer
+                                        Email:</span><code>sb-buyer@personal.example.com</code></div>
+                                <div class="credential-row"><span>Password:</span><code>sandbox_demo</code></div>
+                                <div class="credential-row">
+                                    <span>Seller:</span><code>sb-seller@business.example.com</code></div>
+                            </div>
+                            <form id="paypal-form" onsubmit="return false">
+                                <div class="form-group"><label>PayPal Email</label><input type="email" id="paypal-email"
+                                        placeholder="sb-buyer@personal.example.com"
+                                        value="sb-buyer@personal.example.com"></div>
+                                <div class="form-group"><label>Password</label><input type="password"
+                                        id="paypal-password" placeholder="Enter sandbox password" value="sandbox_demo">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- UPI Panel -->
+                    <div class="method-panel" id="panel-upi">
+                        <div class="upi-container">
+                            <div class="upi-options">
+                                <label class="upi-option active"><input type="radio" name="upi-type" value="vpa"
+                                        checked> Enter VPA/UPI ID</label>
+                                <label class="upi-option"><input type="radio" name="upi-type" value="qr"> Scan QR
+                                    Code</label>
+                            </div>
+                            <div id="upi-vpa-section">
+                                <div class="form-group"><label>UPI ID / VPA</label><input type="text" id="upi-id"
+                                        placeholder="yourname@upi">
+                                    <p class="otp-hint">Test: <strong>test@upi</strong> (success) or
+                                        <strong>fail@upi</strong> (failure)</p>
+                                </div>
+                            </div>
+                            <div id="upi-qr-section" style="display:none">
+                                <div class="qr-code-container">
+                                    <div class="qr-code" id="qr-code"></div>
+                                    <p class="qr-text">Scan with any UPI app</p>
+                                    <p class="qr-amount" id="qr-amount"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Net Banking Panel -->
+                    <div class="method-panel" id="panel-netbanking">
+                        <div class="netbanking-container">
+                            <h4>Select Your Bank</h4>
+                            <div class="bank-grid" id="bank-grid"></div>
+                            <div class="netbanking-redirect-info" id="nb-redirect-info" style="display:none">
+                                <div class="redirect-icon">🔄</div>
+                                <p>You will be redirected to <strong id="selected-bank-name"></strong>'s secure page for
+                                    authentication.</p>
+                                <div class="form-group" style="margin-top:1rem"><label>Account Number
+                                        (Demo)</label><input type="text" id="nb-account" placeholder="1234567890"
+                                        value="1234567890"></div>
+                                <div class="form-group"><label>OTP</label><input type="text" id="nb-otp"
+                                        placeholder="Enter OTP" maxlength="6">
+                                    <p class="otp-hint">Demo OTP: <strong>123456</strong></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pay Button -->
+                    <button class="pay-btn" id="pay-btn" onclick="processPayment()">
+                        <div class="pay-btn-content">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20"
+                                height="20">
+                                <rect x="1" y="4" width="22" height="16" rx="2" />
+                                <line x1="1" y1="10" x2="23" y2="10" />
+                            </svg>
+                            <span>Pay <span id="pay-amount">₹0</span></span>
+                        </div>
+                        <div class="pay-btn-loading" style="display:none">
+                            <div class="spinner"></div>
+                            <span>Processing...</span>
+                        </div>
+                    </button>
+                </div>
+
+                <!-- Processing Overlay -->
+                <div class="processing-overlay" id="processing-overlay" style="display:none">
+                    <div class="processing-card">
+                        <div class="processing-steps">
+                            <div class="processing-step" id="step-validate">
+                                <div class="step-icon">🔍</div>
+                                <div class="step-info">
+                                    <div class="step-name">Validating Payment Details</div>
+                                    <div class="step-status">Pending</div>
+                                </div>
+                            </div>
+                            <div class="processing-step" id="step-encrypt">
+                                <div class="step-icon">🔐</div>
+                                <div class="step-info">
+                                    <div class="step-name">Encrypting Transaction (AES-256)</div>
+                                    <div class="step-status">Pending</div>
+                                </div>
+                            </div>
+                            <div class="processing-step" id="step-fraud">
+                                <div class="step-icon">🛡️</div>
+                                <div class="step-info">
+                                    <div class="step-name">C++ Fraud Detection Engine</div>
+                                    <div class="step-status">Pending</div>
+                                </div>
+                            </div>
+                            <div class="processing-step" id="step-gateway">
+                                <div class="step-icon">🌐</div>
+                                <div class="step-info">
+                                    <div class="step-name">Connecting to Payment Gateway</div>
+                                    <div class="step-status">Pending</div>
+                                </div>
+                            </div>
+                            <div class="processing-step" id="step-auth">
+                                <div class="step-icon">✅</div>
+                                <div class="step-info">
+                                    <div class="step-name">Authorization & Confirmation</div>
+                                    <div class="step-status">Pending</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="processing-log" id="processing-log"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Order Summary -->
+            <div class="gateway-summary">
+                <div class="gateway-summary-card">
+                    <h3 class="gateway-summary-title">Order Summary</h3>
+                    <div id="gateway-items"></div>
+                    <div class="summary-divider"></div>
+                    <div class="summary-row"><span>Subtotal</span><span id="gw-subtotal">₹0</span></div>
+                    <div class="summary-row"><span>Shipping</span><span id="gw-shipping">FREE</span></div>
+                    <div class="summary-row"><span>Tax (GST)</span><span id="gw-tax">₹0</span></div>
+                    <div class="summary-row" id="gw-discount-row" style="display:none"><span>Discount</span><span
+                            id="gw-discount" class="discount-value">-₹0</span></div>
+                    <div class="summary-divider"></div>
+                    <div class="summary-row summary-total"><span>Total</span><span id="gw-total">₹0</span></div>
+                    <div class="powered-by">
+                        <span>Powered by</span>
+                        <div class="powered-logos">
+                            <span class="powered-logo stripe-logo">Stripe</span>
+                            <span class="powered-logo paypal-logo">PayPal</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- API Info Card -->
+                <div class="api-info-card">
+                    <h4>🔧 Sandbox API Details</h4>
+                    <div class="api-detail"><span>Environment</span><code>sandbox</code></div>
+                    <div class="api-detail"><span>Stripe PK</span><code>pk_test_...demo</code></div>
+                    <div class="api-detail"><span>PayPal Client</span><code>sb-XXXXX...@biz</code></div>
+                    <div class="api-detail"><span>Backend</span><code>Java (Spring Boot)</code></div>
+                    <div class="api-detail"><span>Engine</span><code>C++ v3.2.1</code></div>
+                    <div class="api-detail"><span>Encryption</span><code>AES-256-GCM</code></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-overlay" id="cart-overlay" onclick="toggleCart()"></div>
+    <aside class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3>Shopping Cart</h3><button class="cart-close" onclick="toggleCart()"><svg viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                </svg></button>
+        </div>
+        <div class="cart-items" id="cart-items">
+            <div class="cart-empty" id="cart-empty">
+                <p>Your cart is empty</p>
+            </div>
+        </div>
+        <div class="cart-footer" id="cart-footer" style="display:none">
+            <div class="cart-total"><span>Total</span><span class="cart-total-value" id="cart-total-value">₹0</span>
+            </div>
+        </div>
+    </aside>
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="js/data.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/particles.js"></script>
+    <script src="js/gateway.js"></script>
+</body>
+
+</html>
